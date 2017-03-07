@@ -1,0 +1,18 @@
+import java.util.Base64;
+import java.nio.charset.Charset;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONObject;
+
+if (payload != null){
+	JSONParser jsonParser = new JSONParser();
+	JSONObject jsonObject = (JSONObject) jsonParser.parse(payload);
+
+	String userName = (String) jsonObject.get("username");
+	String password = (String) jsonObject.get("password");
+	String authString = userName + "@" + flowVars.EnvironmentName + ":" + password;
+	byte[] encodedBytes = authString.getBytes("UTF-8");
+	String strEncode =  Base64.getEncoder().encodeToString(encodedBytes);
+	
+	//Base64.getEncoder().encodeToString(authString.getBytes("utf-8"));
+	return "\n Basic " + strEncode;
+	}
